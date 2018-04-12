@@ -14,16 +14,18 @@ const argv = yargs
   .alias('help', 'h')
 .argv;
 
+
+// encodeURIComponent returns string encoded as a URI component.
 var encodedAddress = encodeURIComponent(argv.address);
 var geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=AIzaSyDxNBPqHbxTV0LnRsXH8sXigtOxsHA_1yw`;
 
+// axios module's get method utilizes native promise.
 axios.get(geocodeUrl)
 .then((response) => {
   if (response.data.status === 'ZERO_RESULTS') {
     throw new Error('Unable to find that address');
   }
   console.log(response.data.results[0].formatted_address);
-  // console.log(JSON.stringify(response.data.results[0].geometry.location));
   var lat = response.data.results[0].geometry.location.lat;
   var lng = response.data.results[0].geometry.location.lng;
   var weatherUrl = `https://api.darksky.net/forecast/6bc774ec7b4762bdeb9bf4bdae2b367a/${lat},${lng}`;

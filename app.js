@@ -1,3 +1,4 @@
+// non-promise implementation using traditional callbacks
 
 const yargs = require('yargs');
 const geocode = require('./geocode/geocode');
